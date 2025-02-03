@@ -1,38 +1,103 @@
-# sv
+# 🐾 Fetch A Friend
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A modern web application that helps connect shelter dogs with their forever homes. Built with SvelteKit, TypeScript, and TailwindCSS.
 
-## Creating a project
+## 🎯 Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- User authentication
+- Dog search functionality with filters
+- Breed filtering
+- Pagination support
+- Sorting options (by breed, name, age)
+- Favorite dogs selection
+- Smart matching algorithm
+- Modern, responsive UI
 
+## 🛠 Tech Stack
+
+- **Framework**: SvelteKit
+- **Language**: TypeScript
+- **Styling**: TailwindCSS
+- **Authentication**: Custom auth with HTTP-only cookies
+- **API Integration**: Fetch API with credentials
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or pnpm
+
+### Installation
+
+1. Clone the repository:
 ```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+git clone https://github.com/yourusername/fetch-a-friend.git
+cd fetch-a-friend
 ```
 
-## Developing
+2. Install dependencies:
+```bash
+npm install
+# or with pnpm
+pnpm install
+```
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+3. Create a `.env` file in the root directory:
+```env
+PUBLIC_API_URL=https://frontend-take-home-service.fetch.com
+```
 
+4. Start the development server:
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+# or with pnpm
+pnpm dev
 ```
 
-## Building
+5. Open your browser and navigate to `http://localhost:5173`
 
-To create a production version of your app:
+## 🏗 Project Structure
 
-```bash
-npm run build
+```
+src/
+├── lib/
+│   ├── components/    # Reusable UI components
+│   ├── services/      # API and business logic
+│   └── types/         # TypeScript interfaces
+├── routes/            # SvelteKit routes
+└── app.css           # Global styles
 ```
 
-You can preview the production build with `npm run preview`.
+## 🔒 Authentication
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+The application uses a secure authentication system with HTTP-only cookies. The auth flow includes:
+
+- Login with name and email
+- Secure cookie management
+- Protected routes
+- Automatic redirect handling
+
+## 🌐 API Integration
+
+The application integrates with the Fetch API service, providing:
+
+- Dog search and filtering
+- Location-based searches
+- Breed listings
+- Dog matching algorithm
+
+## 📝 Development Notes
+
+- Uses TypeScript for type safety
+- Implements modern SvelteKit features and best practices
+- Follows a service-based architecture for API calls
+- Implements proper error handling and loading states
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
