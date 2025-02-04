@@ -1,10 +1,10 @@
 export interface LoginFormData {
-  name: string;
-  email: string;
+	name: string;
+	email: string;
 }
 
 export interface AuthResponse {
-  success: boolean;
-  error?: string;
-  data?: Partial<LoginFormData>;
+	success: boolean;
+	error?: string;
+	data?: Partial<LoginFormData>;
 }

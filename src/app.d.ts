@@ -6,9 +6,13 @@ declare global {
 	namespace App {
 		interface Locals {
 			isAuthenticated: boolean;
+			accessToken?: string;
 		}
 		// interface Error {}
-		// interface PageData {}
+		interface PageData {
+			isAuthenticated: boolean;
+			breeds?: string[];
+		}
 		// interface Platform {}
 	}
 
@@ -17,4 +21,4 @@ declare global {
 	}
 }
 
-export { };
+export {};
