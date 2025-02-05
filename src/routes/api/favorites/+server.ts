@@ -7,7 +7,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { error } from '@sveltejs/kit';
-import { PETFINDER_API_URL } from '$env/static/private';
+import { PUBLIC_API_URL } from '$env/static/public';
 
 /**
  * GET /api/favorites
@@ -18,27 +18,27 @@ import { PETFINDER_API_URL } from '$env/static/private';
  * @returns {Promise<Response>} JSON response containing array of favorite dog IDs
  */
 export const GET: RequestHandler = async ({ locals }) => {
-	if (!locals.isAuthenticated) {
-		throw error(401, 'Not authenticated');
-	}
+  if (!locals.isAuthenticated) {
+    throw error(401, 'Not authenticated');
+  }
 
-	try {
-		const response = await fetch(`${PETFINDER_API_URL}/favorites`, {
-			headers: {
-				Authorization: `Bearer ${locals.accessToken}`
-			}
-		});
+  try {
+    const response = await fetch(`${PUBLIC_API_URL}/favorites`, {
+      headers: {
+        Authorization: `Bearer ${locals.accessToken}`
+      }
+    });
 
-		if (!response.ok) {
-			throw error(response.status, 'Failed to fetch favorites');
-		}
+    if (!response.ok) {
+      throw error(response.status, 'Failed to fetch favorites');
+    }
 
-		const data = await response.json();
-		return json({ favorites: data.favorites });
-	} catch (e) {
-		console.error('Error fetching favorites:', e);
-		throw error(500, 'Failed to fetch favorites');
-	}
+    const data = await response.json();
+    return json({ favorites: data.favorites });
+  } catch (e) {
+    console.error('Error fetching favorites:', e);
+    throw error(500, 'Failed to fetch favorites');
+  }
 };
 
 /**
@@ -51,29 +51,29 @@ export const GET: RequestHandler = async ({ locals }) => {
  * @returns {Promise<Response>} JSON response indicating success
  */
 export const PUT: RequestHandler = async ({ locals, request }) => {
-	if (!locals.isAuthenticated) {
-		throw error(401, 'Not authenticated');
-	}
+  if (!locals.isAuthenticated) {
+    throw error(401, 'Not authenticated');
+  }
 
-	try {
-		const { favorites } = await request.json();
+  try {
+    const { favorites } = await request.json();
 
-		const response = await fetch(`${PETFINDER_API_URL}/favorites`, {
-			method: 'PUT',
-			headers: {
-				Authorization: `Bearer ${locals.accessToken}`,
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ favorites })
-		});
+    const response = await fetch(`${PUBLIC_API_URL}/favorites`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${locals.accessToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ favorites })
+    });
 
-		if (!response.ok) {
-			throw error(response.status, 'Failed to update favorites');
-		}
+    if (!response.ok) {
+      throw error(response.status, 'Failed to update favorites');
+    }
 
-		return json({ success: true });
-	} catch (e) {
-		console.error('Error updating favorites:', e);
-		throw error(500, 'Failed to update favorites');
-	}
+    return json({ success: true });
+  } catch (e) {
+    console.error('Error updating favorites:', e);
+    throw error(500, 'Failed to update favorites');
+  }
 };
