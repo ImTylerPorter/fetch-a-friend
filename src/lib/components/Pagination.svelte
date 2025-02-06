@@ -23,42 +23,50 @@
 		const pageNumbers: (number | string)[] = [];
 		const maxPagesToShow = 5;
 
+		// If no pages, return empty array
+		if (totalPages <= 0) {
+			return pageNumbers;
+		}
+
+		// If we have fewer pages than our max, show all pages
 		if (totalPages <= maxPagesToShow) {
-			// If we have fewer pages than our max, show all pages
 			for (let i = 1; i <= totalPages; i++) {
 				pageNumbers.push(i);
 			}
-		} else {
-			// Always show first page
-			pageNumbers.push(1);
+			return pageNumbers;
+		}
 
-			// Calculate range around current page
-			let start = Math.max(2, currentPage - 1);
-			let end = Math.min(totalPages - 1, currentPage + 1);
+		// Always show first page
+		pageNumbers.push(1);
 
-			// Adjust range if at edges
-			if (currentPage <= 2) {
-				end = 4;
-			} else if (currentPage >= totalPages - 1) {
-				start = totalPages - 3;
-			}
+		// Calculate range around current page
+		let start = Math.max(2, currentPage - 1);
+		let end = Math.min(totalPages - 1, currentPage + 1);
 
-			// Add ellipsis before range if needed
-			if (start > 2) {
-				pageNumbers.push('...');
-			}
+		// Adjust range if at edges
+		if (currentPage <= 2) {
+			end = 4;
+		} else if (currentPage >= totalPages - 1) {
+			start = totalPages - 3;
+		}
 
-			// Add range
-			for (let i = start; i <= end; i++) {
-				pageNumbers.push(i);
-			}
+		// Add ellipsis before range if needed
+		if (start > 2) {
+			pageNumbers.push('...');
+		}
 
-			// Add ellipsis after range if needed
-			if (end < totalPages - 1) {
-				pageNumbers.push('...');
-			}
+		// Add range
+		for (let i = start; i <= end; i++) {
+			pageNumbers.push(i);
+		}
 
-			// Always show last page
+		// Add ellipsis after range if needed
+		if (end < totalPages - 1) {
+			pageNumbers.push('...');
+		}
+
+		// Add last page only if it's different from what we've already added
+		if (!pageNumbers.includes(totalPages)) {
 			pageNumbers.push(totalPages);
 		}
 
@@ -122,10 +130,11 @@
 			{#if typeof page === 'number'}
 				<button
 					aria-label={`Page ${page}`}
-					class="flex h-8 min-w-[2rem] items-center justify-center rounded-lg border border-white/10 bg-white/5 text-sm text-white transition-colors hover:border-fetch-hot-pink/50 hover:bg-white/10 {page ===
+					aria-current={page === currentPage ? 'page' : undefined}
+					class="flex h-8 min-w-[2rem] items-center justify-center rounded-lg border text-sm transition-colors {page ===
 					currentPage
 						? 'border-fetch-hot-pink bg-fetch-hot-pink/10 text-fetch-hot-pink hover:bg-fetch-hot-pink/20'
-						: ''}"
+						: 'border-white/10 bg-white/5 text-white hover:border-fetch-hot-pink/50 hover:bg-white/10'}"
 					onclick={() => handlePageChange(page)}
 				>
 					{page}
